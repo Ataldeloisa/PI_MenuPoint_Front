@@ -5,10 +5,13 @@
   background-color: #ececec;
 }
 
-/* Área entre navbar e footer: sidebar + conteúdo lado a lado */
+
 .restaurant-layout__body {
   flex: 1;
   display: flex;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .restaurant-layout__content {

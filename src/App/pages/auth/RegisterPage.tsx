@@ -40,8 +40,7 @@ const RegisterPage: React.FC = () => {
   return (
     <div
       className="register-page"
-      style={{ backgroundImage: 'url(/images/Register-Back.png)' }}
-    >
+      style= {{ backgroundImage: 'url(/images/Register-Back.png)' }}>
       <div className="register-page__container">
 
         {/* imagem compartilhada */}
