@@ -1,0 +1,184 @@
+import React, { useState } from 'react';
+import CustomerLayout from '../../../shared/components/layout/Customerlayout';
+import './MenuCliente.css';
+
+// ── Tipos 
+interface Categoria {
+  id: string;
+  label: string;
+  icon: string; 
+}
+
+interface Produto {
+  id: string;
+  categoriaId: string;
+  nome: string;
+  descricao: string;
+  preco: number;
+  imagem: string;
+}
+
+// ── Dados mockados (Depois vem api)
+const CATEGORIAS: Categoria[] = [
+  { id: 'todos',     label: 'Todos',     icon: '🍽️' },
+  { id: 'lanches',   label: 'Lanches',   icon: '🍔' },
+  { id: 'bebidas',   label: 'Bebidas',   icon: '🥤' },
+  { id: 'massas',    label: 'Massas',    icon: '🍝' },
+  { id: 'sobremesas',label: 'Sobremesas',icon: '🧁' },
+  { id: 'pizzas',    label: 'Pizzas',    icon: '🍕' },
+  { id: 'porcoes',   label: 'Porções',   icon: '🍟' },
+  { id: 'saladas',   label: 'Saladas',   icon: '🥗' },
+];
+
+const PRODUTOS: Produto[] = [
+  {
+    id: '1',
+    categoriaId: 'lanches',
+    nome: 'Hamburguer Celestino',
+    descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate',
+    preco: 39.90,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '2',
+    categoriaId: 'massas',
+    nome: 'Macarrão ao molho ito',
+    descricao: 'Massa, molho vermelho almondegas e queijo parmesão',
+    preco: 24.99,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '3',
+    categoriaId: 'porcoes',
+    nome: 'Porção Batatas Brisola',
+    descricao: 'batatas fritas, cheddar e bacon (400g)',
+    preco: 50.00,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '4',
+    categoriaId: 'porcoes',
+    nome: 'Porção de Frango',
+    descricao: 'Frango crocante temperado com molho especial (300g)',
+    preco: 38.00,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '5',
+    categoriaId: 'bebidas',
+    nome: 'Caipirinha',
+    descricao: 'Limão, açúcar e cachaça artesanal',
+    preco: 18.00,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '6',
+    categoriaId: 'saladas',
+    nome: 'Salada Caesar',
+    descricao: 'Alface romana, croutons, parmesão e molho caesar',
+    preco: 22.00,
+    imagem: '/images/comida.jpg',
+  },
+   {
+    id: '7',
+    categoriaId: 'sobremesas',
+    nome: 'Sorvete Cremoso',
+    descricao: 'Sorvete de chocolate com calda de morango',
+    preco: 22.00,
+    imagem: '/images/comida.jpg',
+  },
+  {
+    id: '8',
+    categoriaId: 'pizzas',
+    nome: 'Pizza Portuguesa',
+    descricao: 'Molho, mussarela, presnunto, bacon, milho, ervilha, tomate e oregano',
+    preco: 50.00,
+    imagem: '/images/comida.jpg',
+  },
+];
+
+
+const MenuCliente: React.FC = () => {
+  const [busca, setBusca] = useState('');
+  const [categoriaAtiva, setCategoriaAtiva] = useState('todos');
+  const [carrinho, setCarrinho] = useState<Record<string, number>>({});
+
+  // Filtra por categoria e busca
+  const produtosFiltrados = PRODUTOS.filter((p) => {
+    const naCategoria = categoriaAtiva === 'todos' || p.categoriaId === categoriaAtiva;
+    const naBusca = p.nome.toLowerCase().includes(busca.toLowerCase());
+    return naCategoria && naBusca;
+  });
+
+  const totalCarrinho = Object.values(carrinho).reduce((a, b) => a + b, 0);
+
+  const adicionarAoCarrinho = (id: string) => {
+    setCarrinho((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+  };
+
+  return (
+    <CustomerLayout mode="guest" cartCount={totalCarrinho}>
+      <div className="menu" style={{ backgroundImage: 'url(/images/Fundo-menu.png)' }}>
+
+        {/* Barra de busca */}
+        <div className="menu__busca-wrap">
+          <span className="menu__busca-icon">🔍</span>
+          <input
+            className="menu__busca"
+            type="text"
+            placeholder="Procurar"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+        </div>
+
+        {/* Categorias */}
+        <div className="menu__categorias">
+          {CATEGORIAS.map((cat) => (
+            <button
+              key={cat.id}
+              className={`menu__cat-btn${categoriaAtiva === cat.id ? ' menu__cat-btn--ativo' : ''}`}
+              onClick={() => setCategoriaAtiva(cat.id)}
+              aria-label={cat.label}
+              title={cat.label}
+            >
+              <span className="menu__cat-icon">{cat.icon}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Grid de produtos */}
+        <div className="menu__grid">
+          {produtosFiltrados.length === 0 ? (
+            <p className="menu__vazio">Nenhum produto encontrado.</p>
+          ) : (
+            produtosFiltrados.map((p) => (
+              <div key={p.id} className="menu__card">
+                <img src={p.imagem} alt={p.nome} className="menu__card-img" />
+                <div className="menu__card-body">
+                  <h3 className="menu__card-nome">{p.nome}</h3>
+                  <p className="menu__card-desc">{p.descricao}</p>
+                  <div className="menu__card-rodape">
+                    <span className="menu__card-preco">
+                      R${p.preco.toFixed(2).replace('.', ',')}
+                    </span>
+                    <button
+                      className="menu__card-add"
+                      onClick={() => adicionarAoCarrinho(p.id)}
+                      aria-label={`Adicionar ${p.nome} ao carrinho`}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+      </div>
+    </CustomerLayout>
+  );
+};
+
+export default MenuCliente;

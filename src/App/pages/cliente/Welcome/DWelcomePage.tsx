@@ -1,40 +1,43 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import CustomerLayout from '../../shared/components/layout/Customerlayout';
-import './DWelcomePage.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import CustomerLayout from "../../../shared/components/layout/Customerlayout";
+import "./DWelcomePage.css";
 
 const DWelcomePage: React.FC = () => {
   const navigate = useNavigate();
 
   // ── Dados mockados. Substituir por API futuramente ──
   const restaurante = {
-    nome: 'PIZZARIA',
-    logo: '/images/pizza.jpg',         
-    endereco: 'Rua XV de Novembro, 1000',
-    status: 'Aberto',                  
-    movimento: 'Tranquilo',            
+    nome: "PIZZARIA",
+    logo: "/images/pizza.jpg",
+    endereco: "Rua XV de Novembro, 1000",
+    status: "Aberto",
+    movimento: "Tranquilo",
     horarios: [
-      { dias: 'Seg - Sex', horario: '18:00 - 23:00' },
-      { dias: 'Sáb - Dom', horario: '18:00 - 00:00' },
+      { dias: "Seg - Sex", horario: "18:00 - 23:00" },
+      { dias: "Sáb - Dom", horario: "18:00 - 00:00" },
     ],
   };
 
   const movimentoCor: Record<string, string> = {
-    Tranquilo: '#7ab648',
-    Médio:     '#e6a817',
-    Lotado:    '#c0392b',
+    Tranquilo: "#7ab648",
+    Médio: "#e6a817",
+    Lotado: "#c0392b",
   };
 
-  const cor = movimentoCor[restaurante.movimento] ?? '#888';
+  const cor = movimentoCor[restaurante.movimento] ?? "#888";
 
   return (
     <CustomerLayout mode="logged">
       <div className="wc">
-
         {/* Esquerda */}
         <div className="wc__left">
           <div className="wc__logo-wrap">
-            <img src={restaurante.logo} alt="Logo do restaurante" className="wc__logo" />
+            <img
+              src={restaurante.logo}
+              alt="Logo do restaurante"
+              className="wc__logo"
+            />
           </div>
 
           <p className="wc__endereco">{restaurante.endereco}</p>
@@ -57,7 +60,9 @@ const DWelcomePage: React.FC = () => {
           <div className="wc__info-card">
             <span
               className="wc__status"
-              style={{ color: restaurante.status === 'Aberto' ? '#7ab648' : '#c0392b' }}
+              style={{
+                color: restaurante.status === "Aberto" ? "#7ab648" : "#c0392b",
+              }}
             >
               {restaurante.status}
             </span>
@@ -67,15 +72,21 @@ const DWelcomePage: React.FC = () => {
             {/* Níveis */}
             <div className="wc__movimento-legenda">
               <div className="wc__nivel">
-                <span className="wc__nivel-label" style={{ color: '#7ab648' }}>TRANQUILO</span>
+                <span className="wc__nivel-label" style={{ color: "#7ab648" }}>
+                  TRANQUILO
+                </span>
                 <span className="wc__nivel-tempo">tempo médio: 10 min</span>
               </div>
               <div className="wc__nivel">
-                <span className="wc__nivel-label" style={{ color: '#e6a817' }}>MÉDIO</span>
+                <span className="wc__nivel-label" style={{ color: "#e6a817" }}>
+                  MÉDIO
+                </span>
                 <span className="wc__nivel-tempo">tempo médio: 20 min</span>
               </div>
               <div className="wc__nivel">
-                <span className="wc__nivel-label" style={{ color: '#c0392b' }}>LOTADO</span>
+                <span className="wc__nivel-label" style={{ color: "#c0392b" }}>
+                  LOTADO
+                </span>
                 <span className="wc__nivel-tempo">tempo médio: 1h</span>
               </div>
             </div>
@@ -83,7 +94,10 @@ const DWelcomePage: React.FC = () => {
             {/* Movimento */}
             <div className="wc__movimento-atual">
               <span className="wc__movimento-texto">Movimento agora:</span>
-              <span className="wc__movimento-bolinha" style={{ backgroundColor: cor }} />
+              <span
+                className="wc__movimento-bolinha"
+                style={{ backgroundColor: cor }}
+              />
               <span className="wc__movimento-valor" style={{ color: cor }}>
                 {restaurante.movimento}
               </span>
@@ -93,7 +107,7 @@ const DWelcomePage: React.FC = () => {
                 <p className="wc__acao-label">Faça sua reserva!</p>
                 <button
                   className="wc__btn wc__btn--reserva"
-                  onClick={() => navigate('/customer/tables')}
+                  onClick={() => navigate("/customer/tables")}
                 >
                   FAZER RESERVA
                 </button>
@@ -105,16 +119,14 @@ const DWelcomePage: React.FC = () => {
                 <p className="wc__acao-label">Acesse nosso cardápio</p>
                 <button
                   className="wc__btn wc__btn--cardapio"
-                  onClick={() => navigate('/customer/menu')}
+                  onClick={() => navigate("/customer/menu")}
                 >
                   CARDÁPIO
                 </button>
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </CustomerLayout>
   );

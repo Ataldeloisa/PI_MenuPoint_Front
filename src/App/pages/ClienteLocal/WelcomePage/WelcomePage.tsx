@@ -53,7 +53,7 @@ const WelcomePage: React.FC = () => {
    */
   const handleConfirmTable = () => {
     setShowModal(false);
-    navigate('/customer/menu');
+    navigate('/menu');
   };
 
   /**
