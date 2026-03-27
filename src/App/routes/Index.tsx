@@ -5,6 +5,7 @@ import RegisterPage from '../pages/auth/RegisterPage';
 import WelcomePage from '../pages/ClienteLocal/WelcomePage/WelcomePage';
 import HomeRestaurante from '../pages/Restaurante/Home/HomeRestaurante';
 import Restaurantlayout from '../shared/components/layout/Restaurantelayout';
+import DWelcomePage from '../pages/cliente/DWelcomePage';
 
 /**
  * Novas telas = Novas rotas aqui (Obrigatorio)
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/restaurante/home"element={ <Restaurantlayout><HomeRestaurante /></Restaurantlayout>}/>
+        <Route path="/dwelcome" element={<DWelcomePage />} />
       </Routes>
     </BrowserRouter>
   );
