@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { HiClipboardList, HiExclamation,} from 'react-icons/hi';
 import { MdTableRestaurant } from 'react-icons/md';
 import { BsCashCoin } from 'react-icons/bs';
+import RestaurantLayout from '../../../shared/components/layout/Restaurantelayout';
 import './HomeRestaurante.css';
 
 const HomeRestaurante: React.FC = () => {
@@ -46,6 +47,7 @@ const HomeRestaurante: React.FC = () => {
   ];
  
   return (
+      <RestaurantLayout>
     <div className="home-rest">
       <h2 className="home-rest__title">Pedidos Hoje</h2>
  
@@ -78,6 +80,7 @@ const HomeRestaurante: React.FC = () => {
         </div>
       )}
     </div>
+    </RestaurantLayout>
   );
 };
 
