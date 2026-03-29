@@ -15,6 +15,8 @@ interface CustomerLayoutProps {
    */
   mode?: 'welcome' | 'guest' | 'logged';
   cartCount?: number;
+  /** Chamado ao clicar no ícone do carrinho — abre o painel Carrinho */
+  onCartClick?: () => void;
 }
 
 /** Itens exibidos para o cliente público — só o essencial */
@@ -27,16 +29,11 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   children,
   mode = 'logged',
   cartCount = 0,
+  onCartClick,
 }) => {
 
-  /**
-   * Ícone direito da navbar varia conforme o modo:
-   * - 'welcome' → sem ícone (null)
-   * - 'guest'   → carrinho com badge
-   * - 'logged'  → avatar do cliente
-   */
   const rightIcon = mode === 'guest' ? (
-    <div className="cart-icon">
+    <div className="cart-icon" onClick={onCartClick} style={{ cursor: onCartClick ? 'pointer' : 'default' }}>
       <FaShoppingCart className="cart-icon__svg" />
       {cartCount > 0 && (
         <span className="cart-icon__badge">{cartCount}</span>
@@ -54,10 +51,6 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
   const subtitle = mode === 'guest' ? 'MenuPoint' : '(Cliente)';
 
-  /**
-   * Sidebar só aparece nos modos 'guest' e 'logged'.
-   * No modo 'welcome' o cliente ainda não está navegando.
-   */
   const showSidebar = mode !== 'welcome';
   const sidebarItems = mode === 'guest' ? GUEST_ITEMS : LOGGED_ITEMS;
 

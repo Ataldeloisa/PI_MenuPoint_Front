@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <button type="submit" className="login-page__submit">
+            <button className="login-page__submit"onClick={() => navigate("/restaurante/home")}>
               Entrar
             </button>
 

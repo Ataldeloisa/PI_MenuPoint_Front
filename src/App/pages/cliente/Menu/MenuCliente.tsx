@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CustomerLayout from '../../../shared/components/layout/Customerlayout';
+import Carrinho, { ItemCarrinho } from '../../../shared/components/Carrinho/Carrinho';
 import './MenuCliente.css';
 
 // ── Tipos 
@@ -101,7 +102,8 @@ const PRODUTOS: Produto[] = [
 const MenuCliente: React.FC = () => {
   const [busca, setBusca] = useState('');
   const [categoriaAtiva, setCategoriaAtiva] = useState('todos');
-  const [carrinho, setCarrinho] = useState<Record<string, number>>({});
+  const [itensCarrinho, setItensCarrinho] = useState<ItemCarrinho[]>([]);
+  const [carrinhoAberto, setCarrinhoAberto] = useState(false);
 
   // Filtra por categoria e busca
   const produtosFiltrados = PRODUTOS.filter((p) => {
@@ -110,14 +112,22 @@ const MenuCliente: React.FC = () => {
     return naCategoria && naBusca;
   });
 
-  const totalCarrinho = Object.values(carrinho).reduce((a, b) => a + b, 0);
-
-  const adicionarAoCarrinho = (id: string) => {
-    setCarrinho((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
-  };
+    const adicionarAoCarrinho = (produto: Produto) => {
+      setItensCarrinho((prev) => {
+       const existente = prev.find((i) => i.id === produto.id);
+       if (existente) {
+       return prev.map((i) =>
+        i.id === produto.id ? { ...i, quantidade: i.quantidade + 1 } : i
+      );
+    }
+    return [...prev, { ...produto, quantidade: 1 }];
+  });
+};
+ 
+const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
 
   return (
-    <CustomerLayout mode="guest" cartCount={totalCarrinho}>
+    <CustomerLayout mode="guest" cartCount={totalCarrinho}  onCartClick={() => setCarrinhoAberto(true)}>
       <div className="menu" style={{ backgroundImage: 'url(/images/Fundo-menu.png)' }}>
 
         {/* Barra de busca */}
@@ -164,7 +174,7 @@ const MenuCliente: React.FC = () => {
                     </span>
                     <button
                       className="menu__card-add"
-                      onClick={() => adicionarAoCarrinho(p.id)}
+                      onClick={() => adicionarAoCarrinho(p)}
                       aria-label={`Adicionar ${p.nome} ao carrinho`}
                     >
                       +
@@ -175,8 +185,18 @@ const MenuCliente: React.FC = () => {
             ))
           )}
         </div>
-
       </div>
+
+
+           <Carrinho
+              aberto={carrinhoAberto}
+              onFechar={() => setCarrinhoAberto(false)}
+              itens={itensCarrinho}
+              onFinalizar={() => ('')}
+              onRemover={(id) =>
+                 setItensCarrinho((prev) => prev.filter((i) => i.id !== id)) }
+             />     
+             
     </CustomerLayout>
   );
 };

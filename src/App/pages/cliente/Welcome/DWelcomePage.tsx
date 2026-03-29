@@ -107,7 +107,7 @@ const DWelcomePage: React.FC = () => {
                 <p className="wc__acao-label">Faça sua reserva!</p>
                 <button
                   className="wc__btn wc__btn--reserva"
-                  onClick={() => navigate("/customer/tables")}
+                  onClick={() => navigate("/tables")}
                 >
                   FAZER RESERVA
                 </button>
@@ -119,7 +119,7 @@ const DWelcomePage: React.FC = () => {
                 <p className="wc__acao-label">Acesse nosso cardápio</p>
                 <button
                   className="wc__btn wc__btn--cardapio"
-                  onClick={() => navigate("/customer/menu")}
+                  onClick={() => navigate("/menu")}
                 >
                   CARDÁPIO
                 </button>

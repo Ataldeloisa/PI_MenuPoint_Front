@@ -25,7 +25,7 @@ interface CustomerSidebarProps {
  * Para adicionar um novo item, basta incluir aqui — sem tocar no JSX.
  */
 const SIDEBAR_CONFIG: Record<CustomerSidebarItem, { to: string; icon: React.ReactNode; label: string }> = {
-  home:    { to: '/customer/home',    icon: <HiHome />,            label: 'Início'   },
+  home:    { to: '/dwelcome',    icon: <HiHome />,            label: 'Início'   },
   orders:  { to: '/customer/orders',  icon: <HiClipboardList />,   label: 'Pedidos'  },
   tables:  { to: '/customer/tables',  icon: <MdTableRestaurant />, label: 'Mesas'    },
   profile: { to: '/customer/profile', icon: <FaUserCircle />,      label: 'Perfil'   },

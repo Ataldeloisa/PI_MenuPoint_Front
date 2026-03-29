@@ -147,10 +147,9 @@ const RegisterPage: React.FC = () => {
                   </button>
                 </div>
               </div>
-
             </div>
-
-            <button type="submit" className="register-page__submit">
+            
+            <button className="register-page__submit"onClick={() => navigate("/login")}>
               Criar conta
             </button>
 
