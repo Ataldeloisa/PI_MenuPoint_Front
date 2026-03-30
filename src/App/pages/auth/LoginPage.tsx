@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
 
         {/*Formulário */}
         <div className="login-page__form-side">
-          <h1 className="login-page__title">ENTRAR</h1>
+          <h1 className="login-page__title">Entrar</h1>
 
           <form className="login-page__form" onSubmit={handleSubmit}>
 
@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
 
           </form>
 
-          <button className="login-page__forgot">
+          <button className="login-page__forgot" onClick={() => navigate("/recover")}>
             Esqueceu sua senha?
           </button>
 
@@ -106,7 +106,7 @@ const LoginPage: React.FC = () => {
             Não possui uma conta?{' '}
             <button
               className="login-page__redirect-link"
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/')}
             >
               Criar conta
             </button>

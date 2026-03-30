@@ -8,6 +8,7 @@ import DWelcomePage from "../pages/cliente/Welcome/DWelcomePage";
 import MenuCliente from "../pages/cliente/Menu/MenuCliente";
 import Pedido from "../pages/Restaurante/Cadastros/Pedidos/Pedido";
 import MenuLocal from "../pages/ClienteLocal/Menu/MenuLocal";
+import RecoverPass from "../pages/auth/RecoverPass";
 /**
  * Novas telas = Novas rotas aqui (Obrigatorio)
  */
@@ -21,8 +22,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/restaurante/home" element={<HomeRestaurante /> } />
         <Route path="/dwelcome" element={<DWelcomePage />} />
         <Route path="/menu" element={<MenuCliente />} />
-         <Route path="/menulocal" element={<MenuLocal />} />
+        <Route path="/menulocal" element={<MenuLocal />} />
         <Route path="/restaurante/pedido" element={<Pedido />} />
+        <Route path="/recover" element={<RecoverPass />} />
       </Routes>
     </BrowserRouter>
   );
