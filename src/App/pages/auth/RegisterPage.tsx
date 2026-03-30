@@ -30,7 +30,7 @@ const RegisterPage: React.FC = () => {
   };
 
   /**
-   * Quando a API estiver pronta, aqui chamará o authService.
+   * Chamar API futuramente.
    */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

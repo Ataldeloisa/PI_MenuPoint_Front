@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CustomerLayout from '../../../shared/components/layout/Customerlayout';
 import Carrinho, { ItemCarrinho } from '../../../shared/components/Carrinho/Carrinho';
-import './MenuCliente.css';
+import './MenuLocal.css';
 
 // ── Tipos 
 interface Categoria {
@@ -99,7 +99,7 @@ const PRODUTOS: Produto[] = [
 ];
 
 
-const MenuCliente: React.FC = () => {
+const MenuLocal: React.FC = () => {
   const [busca, setBusca] = useState('');
   const [categoriaAtiva, setCategoriaAtiva] = useState('todos');
   const [itensCarrinho, setItensCarrinho] = useState<ItemCarrinho[]>([]);
@@ -127,7 +127,7 @@ const MenuCliente: React.FC = () => {
 const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
 
   return (
-    <CustomerLayout mode="logged" cartCount={totalCarrinho}  onCartClick={() => setCarrinhoAberto(true)}>
+    <CustomerLayout mode="guest" cartCount={totalCarrinho}  onCartClick={() => setCarrinhoAberto(true)}>
       <div className="menu" style={{ backgroundImage: 'url(/images/Fundo-menu.png)' }}>
 
         {/* Barra de busca */}
@@ -184,24 +184,8 @@ const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
               </div>
             ))
           )}
-
-
-
-
-
-
-          
         </div>
-              {/* Botão flutuante do carrinho */}
-              <button className="menu__carrinho-fab" onClick={() => setCarrinhoAberto(true)} 
-              aria-label="Abrir carrinho"> 
-                🛒
-               {totalCarrinho > 0 && (
-              <span className="menu__carrinho-fab-badge">{totalCarrinho}</span> )}
-              </button>
       </div>
-
-
            <Carrinho
               aberto={carrinhoAberto}
               onFechar={() => setCarrinhoAberto(false)}
@@ -215,4 +199,4 @@ const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
   );
 };
 
-export default MenuCliente;
+export default MenuLocal;

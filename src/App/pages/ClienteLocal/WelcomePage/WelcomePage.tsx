@@ -53,7 +53,7 @@ const WelcomePage: React.FC = () => {
    */
   const handleConfirmTable = () => {
     setShowModal(false);
-    navigate('/menu');
+    navigate('/menulocal');
   };
 
   /**
@@ -101,8 +101,7 @@ const WelcomePage: React.FC = () => {
         /**
          * Overlay escurece o fundo e detecta clique fora do card.
          * O stopPropagation no card impede que o clique dentro
-         * do card feche o modal — sem ele qualquer clique dentro
-         * propagaria para o overlay e fecharia o modal.
+         * do card feche o modal
          */
         <div className="welcome-page__overlay" onClick={handleCloseModal}>
           <div

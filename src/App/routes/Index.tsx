@@ -7,7 +7,7 @@ import HomeRestaurante from "../pages/Restaurante/Home/HomeRestaurante";
 import DWelcomePage from "../pages/cliente/Welcome/DWelcomePage";
 import MenuCliente from "../pages/cliente/Menu/MenuCliente";
 import Pedido from "../pages/Restaurante/Cadastros/Pedidos/Pedido";
-
+import MenuLocal from "../pages/ClienteLocal/Menu/MenuLocal";
 /**
  * Novas telas = Novas rotas aqui (Obrigatorio)
  */
@@ -15,12 +15,13 @@ const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/welcomepage" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<RegisterPage />} />
         <Route path="/restaurante/home" element={<HomeRestaurante /> } />
         <Route path="/dwelcome" element={<DWelcomePage />} />
-        <Route path="menu" element={<MenuCliente />} />
+        <Route path="/menu" element={<MenuCliente />} />
+         <Route path="/menulocal" element={<MenuLocal />} />
         <Route path="/restaurante/pedido" element={<Pedido />} />
       </Routes>
     </BrowserRouter>

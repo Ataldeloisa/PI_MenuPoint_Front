@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   /**
-   * Quando a API estiver pronta, aqui chamará o authService. Por hora é só um placeholder para teste
+   * Chamar API futuramente
    */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const LoginPage: React.FC = () => {
                 />
                 {/**
                  * Botão de toggle da senha — alterna entre mostrar e ocultar.
-                 * type="button" é obrigatório para não submeter o form ao clicar.
+                 * type="button" não submete o form ao clicar.
                  */}
                 <button
                   type="button"

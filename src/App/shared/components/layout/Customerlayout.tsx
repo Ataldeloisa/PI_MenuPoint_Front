@@ -23,7 +23,7 @@ interface CustomerLayoutProps {
 const GUEST_ITEMS: CustomerSidebarItem[] = ['home', 'orders'];
 
 /** Itens exibidos para o cliente logado — acesso completo */
-const LOGGED_ITEMS: CustomerSidebarItem[] = ['home', 'orders', 'tables', 'profile', 'menu'];
+const LOGGED_ITEMS: CustomerSidebarItem[] = ['home', 'orders', 'tables', 'menu'];
 
 const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   children,
