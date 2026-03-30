@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import CustomerLayout from '../../../shared/components/layout/Customerlayout';
 import Carrinho, { ItemCarrinho } from '../../../shared/components/Carrinho/Carrinho';
+import Historico, { PedidoHistorico } from '../../../shared/components/historico/Historico';
 import './MenuLocal.css';
 
 // ── Tipos 
 interface Categoria {
   id: string;
   label: string;
-  icon: string; 
+  icon: string;
 }
 
 interface Produto {
@@ -19,118 +20,98 @@ interface Produto {
   imagem: string;
 }
 
-// ── Dados mockados (Depois vem api)
+// ── Dados mockados
 const CATEGORIAS: Categoria[] = [
-  { id: 'todos',     label: 'Todos',     icon: '🍽️' },
-  { id: 'lanches',   label: 'Lanches',   icon: '🍔' },
-  { id: 'bebidas',   label: 'Bebidas',   icon: '🥤' },
-  { id: 'massas',    label: 'Massas',    icon: '🍝' },
-  { id: 'sobremesas',label: 'Sobremesas',icon: '🧁' },
-  { id: 'pizzas',    label: 'Pizzas',    icon: '🍕' },
-  { id: 'porcoes',   label: 'Porções',   icon: '🍟' },
-  { id: 'saladas',   label: 'Saladas',   icon: '🥗' },
+  { id: 'todos', label: 'Todos', icon: '🍽️' },
+  { id: 'lanches', label: 'Lanches', icon: '🍔' },
+  { id: 'bebidas', label: 'Bebidas', icon: '🥤' },
+  { id: 'massas', label: 'Massas', icon: '🍝' },
+  { id: 'sobremesas', label: 'Sobremesas', icon: '🧁' },
+  { id: 'pizzas', label: 'Pizzas', icon: '🍕' },
+  { id: 'porcoes', label: 'Porções', icon: '🍟' },
+  { id: 'saladas', label: 'Saladas', icon: '🥗' },
 ];
 
 const PRODUTOS: Produto[] = [
-  {
-    id: '1',
-    categoriaId: 'lanches',
-    nome: 'Hamburguer Celestino',
-    descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate',
-    preco: 39.90,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '2',
-    categoriaId: 'massas',
-    nome: 'Macarrão ao molho ito',
-    descricao: 'Massa, molho vermelho almondegas e queijo parmesão',
-    preco: 24.99,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '3',
-    categoriaId: 'porcoes',
-    nome: 'Porção Batatas Brisola',
-    descricao: 'batatas fritas, cheddar e bacon (400g)',
-    preco: 50.00,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '4',
-    categoriaId: 'porcoes',
-    nome: 'Porção de Frango',
-    descricao: 'Frango crocante temperado com molho especial (300g)',
-    preco: 38.00,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '5',
-    categoriaId: 'bebidas',
-    nome: 'Caipirinha',
-    descricao: 'Limão, açúcar e cachaça artesanal',
-    preco: 18.00,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '6',
-    categoriaId: 'saladas',
-    nome: 'Salada Caesar',
-    descricao: 'Alface romana, croutons, parmesão e molho caesar',
-    preco: 22.00,
-    imagem: '/images/comida.jpg',
-  },
-   {
-    id: '7',
-    categoriaId: 'sobremesas',
-    nome: 'Sorvete Cremoso',
-    descricao: 'Sorvete de chocolate com calda de morango',
-    preco: 22.00,
-    imagem: '/images/comida.jpg',
-  },
-  {
-    id: '8',
-    categoriaId: 'pizzas',
-    nome: 'Pizza Portuguesa',
-    descricao: 'Molho, mussarela, presnunto, bacon, milho, ervilha, tomate e oregano',
-    preco: 50.00,
-    imagem: '/images/comida.jpg',
-  },
-];
-
-
+  { id: '1', categoriaId: 'lanches',    nome: 'Hamburguer Celestino',   descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate', preco: 39.90, imagem: '/images/comida.jpg' },
+  { id: '2', categoriaId: 'massas',     nome: 'Macarrão ao molho ito',  descricao: 'Massa, molho vermelho, almondegas e queijo parmesão',               preco: 24.99, imagem: '/images/comida.jpg' },
+  { id: '3', categoriaId: 'porcoes',    nome: 'Porção Batatas Brisola', descricao: 'Batatas fritas, cheddar e bacon (400g)',                             preco: 50.00, imagem: '/images/comida.jpg' },
+  { id: '4', categoriaId: 'porcoes',    nome: 'Porção de Frango',       descricao: 'Frango crocante temperado com molho especial (300g)',                preco: 38.00, imagem: '/images/comida.jpg' },
+  { id: '5', categoriaId: 'bebidas',    nome: 'Caipirinha',             descricao: 'Limão, açúcar e cachaça artesanal',                                  preco: 18.00, imagem: '/images/comida.jpg' },
+  { id: '6', categoriaId: 'saladas',    nome: 'Salada Caesar',          descricao: 'Alface romana, croutons, parmesão e molho caesar',                   preco: 22.00, imagem: '/images/comida.jpg' },
+  { id: '7', categoriaId: 'sobremesas', nome: 'Sorvete Cremoso',        descricao: 'Sorvete de chocolate com calda de morango',                          preco: 22.00, imagem: '/images/comida.jpg' },
+  { id: '8', categoriaId: 'pizzas',     nome: 'Pizza Portuguesa',       descricao: 'Molho, mussarela, presunto, bacon, milho, ervilha, tomate e orégano', preco: 50.00, imagem: '/images/comida.jpg' },
+]
+// ── Componente
 const MenuLocal: React.FC = () => {
-  const [busca, setBusca] = useState('');
-  const [categoriaAtiva, setCategoriaAtiva] = useState('todos');
-  const [itensCarrinho, setItensCarrinho] = useState<ItemCarrinho[]>([]);
-  const [carrinhoAberto, setCarrinhoAberto] = useState(false);
+  // ── Estados
+   const [busca, setBusca]                     = useState('');
+    const [categoriaAtiva, setCategoriaAtiva]   = useState('todos');
+    const [itensCarrinho, setItensCarrinho]     = useState<ItemCarrinho[]>([]);
+    const [carrinhoAberto, setCarrinhoAberto]   = useState(false);
+    const [historicoAberto, setHistoricoAberto] = useState(false);
+    const [itensPedidos, setItensPedidos]       = useState<PedidoHistorico[]>([]);
 
-  // Filtra por categoria e busca
+  // ── Filtro
   const produtosFiltrados = PRODUTOS.filter((p) => {
     const naCategoria = categoriaAtiva === 'todos' || p.categoriaId === categoriaAtiva;
     const naBusca = p.nome.toLowerCase().includes(busca.toLowerCase());
     return naCategoria && naBusca;
   });
 
-    const adicionarAoCarrinho = (produto: Produto) => {
-      setItensCarrinho((prev) => {
-       const existente = prev.find((i) => i.id === produto.id);
-       if (existente) {
-       return prev.map((i) =>
-        i.id === produto.id ? { ...i, quantidade: i.quantidade + 1 } : i
-      );
-    }
-    return [...prev, { ...produto, quantidade: 1 }];
-  });
-};
- 
-const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
+  const totalCarrinho = itensCarrinho.reduce((acc, i) => acc + i.quantidade, 0);
 
+  // ── Handlers
+  const adicionarAoCarrinho = (produto: Produto) => {
+    setItensCarrinho((prev) => {
+      const existente = prev.find((i) => i.id === produto.id);
+      if (existente) {
+        return prev.map((i) =>
+          i.id === produto.id ? { ...i, quantidade: i.quantidade + 1 } : i
+        );
+      }
+      return [...prev, { ...produto, quantidade: 1 }];
+    });
+  };
+
+  const removerDoCarrinho = (id: string) => {
+    setItensCarrinho((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  const finalizarPedido = () => {
+    setItensPedidos((prev) => {
+      const novo = [...prev];
+      itensCarrinho.forEach((item) => {
+        const existente = novo.find((i) => i.id === item.id);
+        if (existente) {
+          existente.quantidade += item.quantidade;
+        } else {
+          novo.push({ ...item });
+        }
+      });
+      return novo;
+    });
+    setItensCarrinho([]);
+    setCarrinhoAberto(false);
+  };
+  // ── Render
   return (
-    <CustomerLayout mode="guest" cartCount={totalCarrinho}  onCartClick={() => setCarrinhoAberto(true)}>
-      <div className="menu" style={{ backgroundImage: 'url(/images/Fundo-menu.png)' }}>
+    <CustomerLayout
+      mode="guest"
+      cartCount={totalCarrinho}
+      onCartClick={() => setCarrinhoAberto(true)}
+      onOrdersClick={() => setHistoricoAberto(true)}
+    >
+      <div
+        className="menu"
+        style={{
+          backgroundImage: 'url(/images/Fundo-menu.png)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover'
+        }}
+      >
 
-        {/* Barra de busca */}
+        {/* Busca */}
         <div className="menu__busca-wrap">
           <span className="menu__busca-icon">🔍</span>
           <input
@@ -157,7 +138,7 @@ const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
           ))}
         </div>
 
-        {/* Grid de produtos */}
+         {/* Grid de produtos */}
         <div className="menu__grid">
           {produtosFiltrados.length === 0 ? (
             <p className="menu__vazio">Nenhum produto encontrado.</p>
@@ -186,15 +167,29 @@ const totalCarrinho = itensCarrinho.reduce((a, i) => a + i.quantidade, 0);
           )}
         </div>
       </div>
-           <Carrinho
+
+        {/* Painéis laterais */}
+            <Carrinho
               aberto={carrinhoAberto}
               onFechar={() => setCarrinhoAberto(false)}
               itens={itensCarrinho}
-              onFinalizar={() => ('')}
-              onRemover={(id) =>
-                 setItensCarrinho((prev) => prev.filter((i) => i.id !== id)) }
-             />     
-             
+              onRemover={removerDoCarrinho}
+              onFinalizar={finalizarPedido}
+            /> 
+
+      <Carrinho
+        aberto={carrinhoAberto}
+        onFechar={() => setCarrinhoAberto(false)}
+        itens={itensCarrinho}
+        onRemover={removerDoCarrinho}
+        onFinalizar={finalizarPedido}
+      />
+
+      <Historico
+        aberto={historicoAberto}
+        onFechar={() => setHistoricoAberto(false)}
+        itens={itensPedidos}
+      />
     </CustomerLayout>
   );
 };
