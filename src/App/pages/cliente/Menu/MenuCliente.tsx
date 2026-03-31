@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CustomerLayout from '../../../shared/components/layout/Customerlayout';
 import Carrinho, { ItemCarrinho } from '../../../shared/components/Carrinho/Carrinho';
 import Historico, { PedidoHistorico } from '../../../shared/components/historico/Historico';
 import './MenuCliente.css';
 
-// ── Tipos 
+// ── Tipos ──────────────────────────────────────────────────────────────────────
 interface Categoria {
   id: string;
   label: string;
@@ -20,7 +21,7 @@ interface Produto {
   imagem: string;
 }
 
-// ── Dados mockados (substituir por API futuramente) 
+// ── Dados mockados (substituir por API futuramente) ────────────────────────────
 const CATEGORIAS: Categoria[] = [
   { id: 'todos',      label: 'Todos',      icon: '🍽️' },
   { id: 'lanches',    label: 'Lanches',    icon: '🍔' },
@@ -33,26 +34,29 @@ const CATEGORIAS: Categoria[] = [
 ];
 
 const PRODUTOS: Produto[] = [
-  { id: '1', categoriaId: 'lanches',    nome: 'Hamburguer Celestino',   descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate', preco: 39.90, imagem: '/images/comida.jpg' },
-  { id: '2', categoriaId: 'massas',     nome: 'Macarrão ao molho ito',  descricao: 'Massa, molho vermelho, almondegas e queijo parmesão',               preco: 24.99, imagem: '/images/comida.jpg' },
-  { id: '3', categoriaId: 'porcoes',    nome: 'Porção Batatas Brisola', descricao: 'Batatas fritas, cheddar e bacon (400g)',                             preco: 50.00, imagem: '/images/comida.jpg' },
-  { id: '4', categoriaId: 'porcoes',    nome: 'Porção de Frango',       descricao: 'Frango crocante temperado com molho especial (300g)',                preco: 38.00, imagem: '/images/comida.jpg' },
-  { id: '5', categoriaId: 'bebidas',    nome: 'Caipirinha',             descricao: 'Limão, açúcar e cachaça artesanal',                                  preco: 18.00, imagem: '/images/comida.jpg' },
-  { id: '6', categoriaId: 'saladas',    nome: 'Salada Caesar',          descricao: 'Alface romana, croutons, parmesão e molho caesar',                   preco: 22.00, imagem: '/images/comida.jpg' },
-  { id: '7', categoriaId: 'sobremesas', nome: 'Sorvete Cremoso',        descricao: 'Sorvete de chocolate com calda de morango',                          preco: 22.00, imagem: '/images/comida.jpg' },
+  { id: '1', categoriaId: 'lanches',    nome: 'Hamburguer Celestino',   descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate',  preco: 39.90, imagem: '/images/comida.jpg' },
+  { id: '2', categoriaId: 'massas',     nome: 'Macarrão ao molho ito',  descricao: 'Massa, molho vermelho, almondegas e queijo parmesão',                preco: 24.99, imagem: '/images/comida.jpg' },
+  { id: '3', categoriaId: 'porcoes',    nome: 'Porção Batatas Brisola', descricao: 'Batatas fritas, cheddar e bacon (400g)',                              preco: 50.00, imagem: '/images/comida.jpg' },
+  { id: '4', categoriaId: 'porcoes',    nome: 'Porção de Frango',       descricao: 'Frango crocante temperado com molho especial (300g)',                 preco: 38.00, imagem: '/images/comida.jpg' },
+  { id: '5', categoriaId: 'bebidas',    nome: 'Caipirinha',             descricao: 'Limão, açúcar e cachaça artesanal',                                   preco: 18.00, imagem: '/images/comida.jpg' },
+  { id: '6', categoriaId: 'saladas',    nome: 'Salada Caesar',          descricao: 'Alface romana, croutons, parmesão e molho caesar',                    preco: 22.00, imagem: '/images/comida.jpg' },
+  { id: '7', categoriaId: 'sobremesas', nome: 'Sorvete Cremoso',        descricao: 'Sorvete de chocolate com calda de morango',                           preco: 22.00, imagem: '/images/comida.jpg' },
   { id: '8', categoriaId: 'pizzas',     nome: 'Pizza Portuguesa',       descricao: 'Molho, mussarela, presunto, bacon, milho, ervilha, tomate e orégano', preco: 50.00, imagem: '/images/comida.jpg' },
 ];
 
-// ── Componente 
+// ── Componente ─────────────────────────────────────────────────────────────────
 const MenuCliente: React.FC = () => {
+  const navigate = useNavigate();
+
   const [busca, setBusca]                     = useState('');
   const [categoriaAtiva, setCategoriaAtiva]   = useState('todos');
   const [itensCarrinho, setItensCarrinho]     = useState<ItemCarrinho[]>([]);
   const [carrinhoAberto, setCarrinhoAberto]   = useState(false);
   const [historicoAberto, setHistoricoAberto] = useState(false);
   const [itensPedidos, setItensPedidos]       = useState<PedidoHistorico[]>([]);
+  const [modalTipoAberto, setModalTipoAberto] = useState(false);
 
-  // ── Filtro 
+  // ── Filtro ──────────────────────────────────────────────────────────────────
   const produtosFiltrados = PRODUTOS.filter((p) => {
     const naCategoria = categoriaAtiva === 'todos' || p.categoriaId === categoriaAtiva;
     const naBusca     = p.nome.toLowerCase().includes(busca.toLowerCase());
@@ -61,7 +65,7 @@ const MenuCliente: React.FC = () => {
 
   const totalCarrinho = itensCarrinho.reduce((acc, i) => acc + i.quantidade, 0);
 
-  // ── Handlers 
+  // ── Handlers ────────────────────────────────────────────────────────────────
   const adicionarAoCarrinho = (produto: Produto) => {
     setItensCarrinho((prev) => {
       const existente = prev.find((i) => i.id === produto.id);
@@ -92,10 +96,15 @@ const MenuCliente: React.FC = () => {
       return novo;
     });
     setItensCarrinho([]);
-    setCarrinhoAberto(false);
+    setModalTipoAberto(false);
   };
 
-  // ── Render 
+  const escolherTipo = (rota: string) => {
+    finalizarPedido();
+    navigate(rota);
+  };
+
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <CustomerLayout
       mode="logged"
@@ -163,29 +172,53 @@ const MenuCliente: React.FC = () => {
 
       </div>
 
-      {/* Painéis laterais */}
+      {/* Botão flutuante do carrinho */}
+      <button
+        className="menu__carrinho-fab"
+        onClick={() => setCarrinhoAberto(true)}
+        aria-label="Abrir carrinho"
+      >
+        🛒
+        {totalCarrinho > 0 && (
+          <span className="menu__carrinho-fab-badge">{totalCarrinho}</span>
+        )}
+      </button>
+
+      {/* Painel do carrinho */}
       <Carrinho
         aberto={carrinhoAberto}
         onFechar={() => setCarrinhoAberto(false)}
         itens={itensCarrinho}
         onRemover={removerDoCarrinho}
-        onFinalizar={finalizarPedido}
-      /> 
+        onFinalizar={() => {
+          setCarrinhoAberto(false);
+          setModalTipoAberto(true);
+        }}
+      />
 
-      {/* Botão flutuante do carrinho */}
-            <button
-              className="menu__carrinho-fab"
-              onClick={() => setCarrinhoAberto(true)}
-              aria-label="Abrir carrinho">
-              🛒
-           {totalCarrinho > 0 && ( <span className="menu__carrinho-fab-badge">{totalCarrinho}</span>)}
+      {/* Painel do histórico */}
+      <Historico
+        aberto={historicoAberto}
+        onFechar={() => setHistoricoAberto(false)}
+        itens={itensPedidos}
+      />
+
+      {/* Modal de tipo de pedido — entrega ou retirada */}
+      {modalTipoAberto && (
+        <>
+          <div className="mtp__overlay" onClick={() => setModalTipoAberto(false)} />
+          <div className="mtp__modal">
+            <button className="mtp__card" onClick={() => escolherTipo('/customer/delivery')}>
+              <span className="mtp__card-label">Para entrega</span>
+              <img src="/images/delivery.png" alt="Para entrega" className="mtp__card-img" />
             </button>
-
-            <Historico
-              aberto={historicoAberto}
-              onFechar={() => setHistoricoAberto(false)}
-              itens={itensPedidos}
-            />
+            <button className="mtp__card" onClick={() => escolherTipo('/customer/retirada')}>
+              <span className="mtp__card-label">Para Retirada</span>
+              <img src="/images/retirada.png" alt="Para retirada" className="mtp__card-img" />
+            </button>
+          </div>
+        </>
+      )}
 
     </CustomerLayout>
   );
