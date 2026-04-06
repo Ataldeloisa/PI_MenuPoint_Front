@@ -71,7 +71,7 @@ const WelcomePage: React.FC = () => {
         {/* Logo do restaurante — futuramente virá da API */}
         <div className="welcome-page__logo-wrapper">
           <img
-            src="/images/pizza.jpg"
+            src="/images/Menu/pizza.jpg"
             alt="Logo do restaurante"
             className="welcome-page__logo"
           />

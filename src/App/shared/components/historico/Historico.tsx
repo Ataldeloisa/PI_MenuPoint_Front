@@ -17,7 +17,6 @@ interface HistoricoProps {
   itens: PedidoHistorico[];
 }
 
-// ──────────────────────────────────────────────────────
 const Historico: React.FC<HistoricoProps> = ({ aberto, onFechar, itens }) => {
   const total = itens.reduce((acc, i) => acc + i.preco * i.quantidade, 0);
 

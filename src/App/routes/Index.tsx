@@ -9,6 +9,10 @@ import MenuCliente from "../pages/cliente/Menu/MenuCliente";
 import Pedido from "../pages/Restaurante/Cadastros/Pedidos/Pedido";
 import MenuLocal from "../pages/ClienteLocal/Menu/MenuLocal";
 import RecoverPass from "../pages/auth/RecoverPass";
+import Reserva from "../pages/cliente/Reserva/Reserva";
+import ControlePedido from "../pages/cliente/ControlePedido/ControlePedido";
+import CadastroEndereco from "../pages/cliente/CadastroEnde/CadastroEndereço";
+
 /**
  * Novas telas = Novas rotas aqui (Obrigatorio)
  */
@@ -25,6 +29,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/menulocal" element={<MenuLocal />} />
         <Route path="/restaurante/pedido" element={<Pedido />} />
         <Route path="/recover" element={<RecoverPass />} />
+        <Route path="/reserva" element={<Reserva />} />
+        <Route path="/historico" element={<ControlePedido />} />
+        <Route path="/endereço" element={<CadastroEndereco />} />
       </Routes>
     </BrowserRouter>
   );

@@ -33,15 +33,17 @@ const CATEGORIAS: Categoria[] = [
 ];
 
 const PRODUTOS: Produto[] = [
-  { id: '1', categoriaId: 'lanches',    nome: 'Hamburguer Celestino',   descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate', preco: 39.90, imagem: '/images/comida.jpg' },
-  { id: '2', categoriaId: 'massas',     nome: 'Macarrão ao molho ito',  descricao: 'Massa, molho vermelho, almondegas e queijo parmesão',               preco: 24.99, imagem: '/images/comida.jpg' },
-  { id: '3', categoriaId: 'porcoes',    nome: 'Porção Batatas Brisola', descricao: 'Batatas fritas, cheddar e bacon (400g)',                             preco: 50.00, imagem: '/images/comida.jpg' },
-  { id: '4', categoriaId: 'porcoes',    nome: 'Porção de Frango',       descricao: 'Frango crocante temperado com molho especial (300g)',                preco: 38.00, imagem: '/images/comida.jpg' },
-  { id: '5', categoriaId: 'bebidas',    nome: 'Caipirinha',             descricao: 'Limão, açúcar e cachaça artesanal',                                  preco: 18.00, imagem: '/images/comida.jpg' },
-  { id: '6', categoriaId: 'saladas',    nome: 'Salada Caesar',          descricao: 'Alface romana, croutons, parmesão e molho caesar',                   preco: 22.00, imagem: '/images/comida.jpg' },
-  { id: '7', categoriaId: 'sobremesas', nome: 'Sorvete Cremoso',        descricao: 'Sorvete de chocolate com calda de morango',                          preco: 22.00, imagem: '/images/comida.jpg' },
-  { id: '8', categoriaId: 'pizzas',     nome: 'Pizza Portuguesa',       descricao: 'Molho, mussarela, presunto, bacon, milho, ervilha, tomate e orégano', preco: 50.00, imagem: '/images/comida.jpg' },
-]
+  { id: '1', categoriaId: 'lanches',    nome: 'Hamburguer Celestino',   descricao: 'Pão, gergilim, hamburguer, bacon, cheddar, alface, cebola, tomate',  preco: 39.90, imagem: '/images/menu/lanche.jpg' },
+  { id: '2', categoriaId: 'massas',     nome: 'Macarrão ao molho ito',  descricao: 'Massa, molho vermelho, almondegas e queijo parmesão',                preco: 24.99, imagem: '/images/menu/macarrão.jpg' },
+  { id: '3', categoriaId: 'porcoes',    nome: 'Porção Batatas Brisola', descricao: 'Batatas fritas, cheddar e bacon (400g)',                              preco: 50.00, imagem: '/images/menu/batata.jpg' },
+  { id: '4', categoriaId: 'porcoes',    nome: 'Porção de Frango',       descricao: 'Frango crocante temperado com molho especial (300g)',                 preco: 38.00, imagem: '/images/menu/pf.jpg' },
+  { id: '5', categoriaId: 'bebidas',    nome: 'Caipirinha',             descricao: 'Limão, açúcar e cachaça artesanal',                                   preco: 18.00, imagem: '/images/menu/caipira.jpg' },
+  { id: '6', categoriaId: 'saladas',    nome: 'Salada Caesar',          descricao: 'Alface romana, croutons, parmesão e molho caesar',                    preco: 22.00, imagem: '/images/menu/ceaser.jpg' },
+  { id: '7', categoriaId: 'sobremesas', nome: 'Sorvete Cremoso',        descricao: 'Sorvete de chocolate com calda de morango',                           preco: 22.00, imagem: '/images/menu/sor.jpg' },
+  { id: '8', categoriaId: 'pizzas',     nome: 'Pizza Portuguesa',       descricao: 'Molho, mussarela, presunto, bacon, milho, ervilha, tomate e orégano', preco: 50.00, imagem: '/images/menu/pp.jpg' },
+  { id: '9', categoriaId: 'bebidas',    nome: 'Coca-Cola',              descricao: 'Coca-Cola Lata (350ml)',                                              preco: 6.00, imagem: '/images/menu/coca.jpg' },
+];
+
 // ── Componente
 const MenuLocal: React.FC = () => {
   // ── Estados
@@ -102,14 +104,8 @@ const MenuLocal: React.FC = () => {
       onCartClick={() => setCarrinhoAberto(true)}
       onOrdersClick={() => setHistoricoAberto(true)}
     >
-      <div
-        className="menu"
-        style={{
-          backgroundImage: 'url(/images/Fundo-menu.png)',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover'
-        }}
-      >
+      <div className="menu" style={{ backgroundImage: 'url(/images/Fundo-menu.png)' }}>
+
 
         {/* Busca */}
         <div className="menu__busca-wrap">
@@ -167,15 +163,6 @@ const MenuLocal: React.FC = () => {
           )}
         </div>
       </div>
-
-        {/* Painéis laterais */}
-            <Carrinho
-              aberto={carrinhoAberto}
-              onFechar={() => setCarrinhoAberto(false)}
-              itens={itensCarrinho}
-              onRemover={removerDoCarrinho}
-              onFinalizar={finalizarPedido}
-            /> 
 
       <Carrinho
         aberto={carrinhoAberto}

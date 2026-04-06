@@ -9,47 +9,65 @@ export type CustomerSidebarItem = 'home' | 'orders' | 'tables' | 'menu';
 
 interface CustomerSidebarProps {
   items: CustomerSidebarItem[];
-  /** onClick opcional por item — se fornecido, abre painel ao invés de navegar */
+  /**
+   * onClick opcional por item — se fornecido, vira botão ao invés de NavLink.
+   * Útil para abrir painéis laterais (ex: histórico).
+   */
   onItemClick?: Partial<Record<CustomerSidebarItem, () => void>>;
+  /**
+   * Permite sobrescrever a rota padrão de qualquer item.
+   * Útil quando o mesmo item aponta para páginas diferentes
+   */
+  routeOverrides?: Partial<Record<CustomerSidebarItem, string>>;
 }
 
-/**
- * Mapa de configuração de cada item da sidebar.
- * Para adicionar um novo item, basta incluir aqui — sem tocar no JSX.
- */
+// ── Configuração padrão dos itens ──────────────────────
+// Para adicionar um novo item, basta incluir aqui — sem tocar em outro TSX.
 const SIDEBAR_CONFIG: Record<CustomerSidebarItem, { to: string; icon: React.ReactNode; label: string }> = {
-  home:   { to: '/dwelcome',         icon: <HiHome />,          label: 'Início'   },
-  orders: { to: '/customer/orders',  icon: <HiClipboardList />, label: 'Pedidos'  },
-  tables: { to: '/customer/tables',  icon: <MdTableRestaurant />,label: 'Mesas'   },
-  menu:   { to: '/customer/menu',    icon: <HiViewList />,      label: 'Cardápio' },
+  home:   { to: '/dwelcome',   icon: <HiHome />,           label: 'Início'   },
+  orders: { to: '/historico',  icon: <HiClipboardList />,  label: 'Pedidos'  },
+  tables: { to: '/reserva',    icon: <MdTableRestaurant />, label: 'Mesas'    },
+  menu:   { to: '/menu',       icon: <HiViewList />,        label: 'Cardápio' },
 };
 
-// ──────────────────────────────────────────────────────
-const CustomerSidebar: React.FC<CustomerSidebarProps> = ({ items, onItemClick }) => {
+// ── Componente ─────────────────────────────────────────
+const CustomerSidebar: React.FC<CustomerSidebarProps> = ({
+  items,
+  onItemClick,
+  routeOverrides,
+}) => {
   return (
     <aside className="customer-sidebar">
       <nav className="customer-sidebar__nav">
         {items.map((item) => {
-          const { to, icon, label } = SIDEBAR_CONFIG[item];
+          const config     = SIDEBAR_CONFIG[item];
           const handleClick = onItemClick?.[item];
 
-          // Se tiver onClick, vira botão — senão continua como NavLink
+          // Override de rota tem prioridade sobre o padrão
+          const to = routeOverrides?.[item] ?? config.to;
+
+          // Se tiver onClick, vira botão — clique abre painel ao invés de navegar
           if (handleClick) {
             return (
               <button
                 key={item}
                 className="customer-sidebar__item"
                 onClick={handleClick}
-                aria-label={label}
+                aria-label={config.label}
               >
-                <span className="customer-sidebar__icon">{icon}</span>
+                <span className="customer-sidebar__icon">{config.icon}</span>
               </button>
             );
           }
 
           return (
-            <NavLink key={item} to={to} className="customer-sidebar__item" aria-label={label}>
-              <span className="customer-sidebar__icon">{icon}</span>
+            <NavLink
+              key={item}
+              to={to}
+              className="customer-sidebar__item"
+              aria-label={config.label}
+            >
+              <span className="customer-sidebar__icon">{config.icon}</span>
             </NavLink>
           );
         })}

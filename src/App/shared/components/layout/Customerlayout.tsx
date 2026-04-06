@@ -11,8 +11,8 @@ interface CustomerLayoutProps {
   /**
    * Define o modo do layout:
    * - 'welcome' → tela de entrada, só navbar e footer, sem sidebar
-   * - 'guest'   → cliente público, carrinho na navbar e sidebar reduzida
-   * - 'logged'  → cliente logado, avatar na navbar e sidebar completa
+   * - 'guest'   → cliente local (QR code), carrinho na navbar, sidebar reduzida
+   * - 'logged'  → cliente delivery logado, avatar na navbar, sidebar completa
    */
   mode?: 'welcome' | 'guest' | 'logged';
   cartCount?: number;
@@ -22,11 +22,19 @@ interface CustomerLayoutProps {
   onOrdersClick?: () => void;
 }
 
-// ── Constantes ─────────────────────────────────────────
+// ── Itens da sidebar por modo
 const GUEST_ITEMS:  CustomerSidebarItem[] = ['home', 'orders'];
 const LOGGED_ITEMS: CustomerSidebarItem[] = ['home', 'orders', 'tables', 'menu'];
 
-// ──────────────────────────────────────────────────────
+/**
+ * No modo guest o cliente está no restaurante (veio pelo QR code).
+ * O item 'menu' deve apontar para /menulocal, não para /menu (delivery).
+ */
+const GUEST_ROUTE_OVERRIDES: Partial<Record<CustomerSidebarItem, string>> = {
+  home: '/menulocal'
+};
+
+// ── Componente ─────────────────────────────────────────
 const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   children,
   mode = 'logged',
@@ -54,12 +62,15 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({
     <img src="/icons/restaurant-logo.png" alt="Logo do restaurante" />
   );
 
-  const subtitle     = mode === 'guest' ? 'MenuPoint' : '(Cliente)';
-  const showSidebar  = mode !== 'welcome';
+  const subtitle    = mode === 'guest' ? 'MenuPoint' : '(Cliente)';
+  const showSidebar = mode !== 'welcome';
   const sidebarItems = mode === 'guest' ? GUEST_ITEMS : LOGGED_ITEMS;
 
   // Passa o onClick de histórico apenas para o item 'orders'
   const sidebarClicks = onOrdersClick ? { orders: onOrdersClick } : undefined;
+
+  // Overrides de rota só se aplicam no modo guest
+  const routeOverrides = mode === 'guest' ? GUEST_ROUTE_OVERRIDES : undefined;
 
   return (
     <div className="customer-layout">
@@ -67,7 +78,11 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
       <div className="customer-layout__body">
         {showSidebar && (
-          <CustomerSidebar items={sidebarItems} onItemClick={sidebarClicks} />
+          <CustomerSidebar
+            items={sidebarItems}
+            onItemClick={sidebarClicks}
+            routeOverrides={routeOverrides}
+          />
         )}
         <main className="customer-layout__content">{children}</main>
       </div>

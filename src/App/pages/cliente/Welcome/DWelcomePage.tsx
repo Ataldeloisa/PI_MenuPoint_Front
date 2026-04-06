@@ -9,7 +9,7 @@ const DWelcomePage: React.FC = () => {
   // ── Dados mockados. Substituir por API futuramente ──
   const restaurante = {
     nome: "PIZZARIA",
-    logo: "/images/pizza.jpg",
+    logo: "/images/Menu/pizza.jpg",
     endereco: "Rua XV de Novembro, 1000",
     status: "Aberto",
     movimento: "Tranquilo",
@@ -107,7 +107,7 @@ const DWelcomePage: React.FC = () => {
                 <p className="wc__acao-label">Faça sua reserva!</p>
                 <button
                   className="wc__btn wc__btn--reserva"
-                  onClick={() => navigate("/tables")}
+                  onClick={() => navigate("/reserva")}
                 >
                   FAZER RESERVA
                 </button>
