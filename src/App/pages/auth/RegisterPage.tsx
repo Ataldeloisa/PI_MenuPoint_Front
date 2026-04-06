@@ -30,7 +30,7 @@ const RegisterPage: React.FC = () => {
   };
 
   /**
-   * Quando a API estiver pronta, aqui chamará o authService.
+   * Chamar API futuramente.
    */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,8 +40,7 @@ const RegisterPage: React.FC = () => {
   return (
     <div
       className="register-page"
-      style={{ backgroundImage: 'url(/images/Register-Back.png)' }}
-    >
+      style= {{ backgroundImage: 'url(/images/Register-Back.png)' }}>
       <div className="register-page__container">
 
         {/* imagem compartilhada */}
@@ -148,10 +147,9 @@ const RegisterPage: React.FC = () => {
                   </button>
                 </div>
               </div>
-
             </div>
-
-            <button type="submit" className="register-page__submit">
+            
+            <button className="register-page__submit"onClick={() => navigate("/login")}>
               Criar conta
             </button>
 

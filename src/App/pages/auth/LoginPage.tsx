@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   /**
-   * Quando a API estiver pronta, aqui chamará o authService. Por hora é só um placeholder para teste
+   * Chamar API futuramente
    */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
 
         {/*Formulário */}
         <div className="login-page__form-side">
-          <h1 className="login-page__title">ENTRAR</h1>
+          <h1 className="login-page__title">Entrar</h1>
 
           <form className="login-page__form" onSubmit={handleSubmit}>
 
@@ -77,7 +77,7 @@ const LoginPage: React.FC = () => {
                 />
                 {/**
                  * Botão de toggle da senha — alterna entre mostrar e ocultar.
-                 * type="button" é obrigatório para não submeter o form ao clicar.
+                 * type="button" não submete o form ao clicar.
                  */}
                 <button
                   type="button"
@@ -90,13 +90,13 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <button type="submit" className="login-page__submit">
+            <button className="login-page__submit"onClick={() => navigate("/restaurante/home")}>
               Entrar
             </button>
 
           </form>
 
-          <button className="login-page__forgot">
+          <button className="login-page__forgot" onClick={() => navigate("/recover")}>
             Esqueceu sua senha?
           </button>
 
@@ -106,7 +106,7 @@ const LoginPage: React.FC = () => {
             Não possui uma conta?{' '}
             <button
               className="login-page__redirect-link"
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/')}
             >
               Criar conta
             </button>

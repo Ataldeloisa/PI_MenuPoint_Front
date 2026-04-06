@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
+  border-radius: 0 40px 40px 0;
 }
 
 .customer-sidebar__nav {
@@ -17,6 +18,7 @@
   width: 100%;
 }
 
+/* NavLink e button compartilham o mesmo visual */
 .customer-sidebar__item {
   width: 52px;
   height: 52px;
@@ -24,9 +26,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  transition: background-color 0.2s;
+  border: none;
+  background: none;
   text-decoration: none;
   color: #bbbbbb;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .customer-sidebar__item:hover {

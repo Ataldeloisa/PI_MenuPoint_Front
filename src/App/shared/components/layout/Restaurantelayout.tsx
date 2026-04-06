@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import RestaurantSidebar from './Sidebar/RestaurantSidebar';
-import './RestaurantLayout.css';
+import './Restaurantelayout.css';
 
 interface RestaurantLayoutProps {
   children: React.ReactNode;
@@ -18,16 +18,18 @@ const RestaurantLayout: React.FC<RestaurantLayoutProps> = ({ children }) => {
   );
 
   return (
+   
     <div className="restaurant-layout">
       <Navbar subtitle="(Restaurante)" rightIcon={rightIcon} leftIcon={leftIcon} />
 
-      <div className="restaurant-layout__body">
+      <div className="restaurant-layout__body" style={{ backgroundImage: 'url(/images/home-restimg.png)' }}>
         <RestaurantSidebar />
         <main className="restaurant-layout__content">{children}</main>
       </div>
 
       <Footer />
     </div>
+    
   );
 };
 
